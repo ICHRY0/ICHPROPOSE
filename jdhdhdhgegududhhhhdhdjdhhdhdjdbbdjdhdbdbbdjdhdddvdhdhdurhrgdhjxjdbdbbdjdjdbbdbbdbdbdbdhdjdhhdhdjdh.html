@@ -1,0 +1,592 @@
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game History</title>
+    <style>
+        body {
+            background-color: #1c1c1c;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* Tab container */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: #2d2d2d;
+            padding: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        /* Tab style */
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            border-bottom: 3px solid transparent;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Active tab */
+        .tab.active {
+            background: linear-gradient(to right, #cc66ff, #edb65c);
+            color: black;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+
+        /* Tab content container */
+        .content {
+            display: none;
+            padding: 20px;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Game history table */
+        .result-history {
+            font-family: 'Courier New', monospace;
+            font-size: 30px;
+            font-weight: bold;
+            color: #cc9900;
+            margin-top: 20px;
+            width: 90%; 
+            background-color: #000000;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Title styling */
+        .history-title {
+            font-size: 8px;
+            font-weight: bold;
+            color: #9900cc;
+            margin-bottom: 10px;
+            text-align: center; 
+        }
+
+        /* Table styling */
+        table {
+            width: 100%; 
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            border: 2px solid #cc66ff;
+            padding: 12px;
+            text-align: center;
+            background-color: #1c1c1c;
+        }
+
+        th {
+            background-color: #cc66ff;
+            color: #000000;
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: #fff;
+            font-size: 8px;
+        }
+
+        /* Hover effect on rows */
+        tr:hover td {
+            background-color: #333;
+        }
+
+        /* Ball container */
+        .ball {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            margin: 5px;
+            font-size: 8px;
+            color: #00ff00;
+        }
+        
+               .card {
+            background-color: #000;
+            border-radius: 20px;
+            padding: 25px;
+            width: 300px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+
+        .info-box {
+          font-weight: bold;
+            background-color: #cc66ff;
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-box img {
+            width: 24px;
+            margin-right: 10px;
+        }
+
+        .info-box span {
+            font-size: 22px;
+            color: #333;
+        }
+
+        .result {
+            background-color: #cc66ff;
+            color: white;
+            font-size: 60px;
+            font-weight: bold;
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+            .container-ab {
+      background-color: #000;
+      width: 300px;
+      padding: 40px;
+      text-align: center;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 28px;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .icon img {
+      width: 90px;
+      height: 90px;
+    }
+
+    .developer-btn {
+      display: inline-block;
+      padding: 15px 35px;
+      margin-top: 25px;
+      background-color: white;
+      color: #6a32ff;
+      text-transform: uppercase;
+      font-weight: bold;
+      border-radius: 50px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      font-size: 18px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+
+    .developer-btn:hover {
+      background-color: #ddd;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-text {
+      margin-top: 30px;
+      font-size: 12px;
+      color: white;
+      letter-spacing: 0.05em;
+    }
+
+        
+
+        .footer-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        /* Drop shadow effect to make the card look lifted */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        /* Adding a subtle transition effect */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .red { background-color: red; }
+        .green { background-color: green; }
+        .blue { background-color: blue; }
+        .yellow { background-color: yellow; }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+                font-size: 10px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showContent('gameHistory')"> RESULTS</div>
+        <div class="tab" onclick="showContent('chart')">MOD</div>
+        <div class="tab" onclick="showContent('myHistory')">SUPPORT</div>
+    </div>
+
+    <!-- Game History Section -->
+    <div id="gameHistory" class="content active">
+        <div class="result-history">
+            <div class="history-title">Game History</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Period Number</th>
+                        <th>Number</th>
+                        <th>Big/Small</th>
+                        <th>Colour</th>
+                    </tr>
+                </thead>
+                <tbody id="history-list"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div id="chart" class="content">
+    <div class="card">
+      <h3>PREIOD</h3>
+      <div class="info-box">
+        <img src="checked--v1.png" alt="Period Icon">
+        <span><div class="issue-number" id="period-number">Loading...</div></span>
+      </div>
+      <h3>TIME LEFT</h3>
+      <div class="info-box">
+        <img src="images/checked--v1.png" alt="Timer Icon">
+        <span id="minutes"></span>:<span id="seconds">60</span>
+      </div>
+       <br>
+       <h3>
+         RESULT 
+       </h3>
+      <div id="result" class="result">SMALL</div>
+            <br>      <br>      <br>
+      <p class="footer-text">COPYRIGHT ©%F | ICH ARMY</p>
+    </div>
+    </div>
+
+    <!-- My History Section -->
+    <div id="myHistory" class="content">
+  <div class="container-ab">
+    <h1>THANK YOU</h1>
+    <div class="icon">
+      <img src="external-customer-care-digital-nomading-relocation-flaticons-lineal-color-flat-icons.png" alt="Headset Icon">
+    </div>
+    <a href="https://t.me/+_L9lBiaKZHwzY2U1" class="developer-btn">DEVELOPER &gt;</a>
+    <p class="footer-text">Any Problem You Can Contact Developer.</p>
+  </div>
+    </div>
+
+    <script>
+        // Function to show content based on tab selection
+        function showContent(contentId) {
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(contentId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+
+    <!-- Game history and predictions script -->
+    <script>
+let currentPeriod = "";
+
+
+function getCurrentPeriod() {
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+    const currentDate = new Date(now);
+    const periodDate = currentDate.toISOString().split('T')[0].replace(/-/g, '');
+    const totalMinutes = currentDate.getHours() * 60 + currentDate.getMinutes() + 1;
+    const periodNumber = String(totalMinutes).padStart(4, '0');
+    return periodDate + periodNumber;
+}
+
+
+function predict() {
+    const options = ["BIG", "SMALL"];
+    const randomIndex = Math.floor(Math.random() * options.length);
+    return options[randomIndex];
+}
+
+
+function checkAndRefreshPeriod() {
+    const newPeriod = getCurrentPeriod();
+
+
+    if (newPeriod !== currentPeriod) {
+        currentPeriod = newPeriod; 
+        location.reload();
+    }
+}
+
+
+function updatePrediction() {
+    document.getElementById('result').textContent = predict(); 
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    currentPeriod = getCurrentPeriod(); 
+    updatePrediction();
+
+  
+    setInterval(checkAndRefreshPeriod, 1000); 
+});
+
+
+</script>
+
+
+<!-- script v3 -->
+  
+<script>
+
+async function fetchCurrentGameIssue() {
+  const apiUrl = 'https://api.bdg88zf.com/api/webapi/GetGameIssue';
+  const requestData = {
+    "typeId": 1,
+    "language": 0,
+    "random": "40079dcba93a48769c6ee9d4d4fae23f",
+    "signature": "D12108C4F57C549D82B23A91E0FA20AE",
+    "timestamp": 1727792520
+  };
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Accept': 'application/json, text/plain, */*'
+      },
+      body: JSON.stringify(requestData)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.code === 0) {
+        updateTimer(data.data);
+      } else {
+        console.error('Failed to fetch game issue:', data.msg);
+      }
+    } else {
+      console.error('Network response was not ok:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+}
+
+function updateTimer(data) {
+  const periodNumber = document.getElementById('period-number');
+  periodNumber.textContent = data.issueNumber;
+
+  const endTime = new Date(data.endTime).getTime();
+  const interval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = endTime - now;
+
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('minutes').textContent = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById('seconds').textContent = seconds < 10 ? '0' + seconds : seconds;
+
+    if (distance < 0) {
+      clearInterval(interval);
+      document.getElementById('minutes').textContent = "00";
+      document.getElementById('seconds').textContent = "00";
+    
+      fetchCurrentGameIssue();
+      fetchPreviousResults();   
+    }
+  }, 1000);
+}
+
+
+async function fetchPreviousResults() {
+  const apiUrl = 'https://api.bdg88zf.com/api/webapi/GetNoaverageEmerdList';
+  const requestData = {
+    "pageSize": 10,
+    "pageNo": 1,
+    "typeId": 1,
+    "language": 0,
+    "random": "c2505d9138da4e3780b2c2b34f2fb789",
+    "signature": "7D637E060DA35C0C6E28DC6D23D71BED",
+    "timestamp": 1727792520
+  };
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Accept': 'application/json, text/plain, */*'
+      },
+      body: JSON.stringify(requestData)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.code === 0) {
+        updatePreviousResults(data.data.list);
+      } else {
+        console.error('Failed to fetch previous results:', data.msg);
+      }
+    } else {
+      console.error('Network response was not ok:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+}
+
+function updatePreviousResults(resultList) {
+  const historyTable = document.getElementById('history-list');
+  historyTable.innerHTML = ''; 
+
+  resultList.forEach(result => {
+    const { issueNumber, number, colour } = result;
+    const size = number <= 4 ? 'SMALL' : 'BIG'; 
+
+
+    const row = document.createElement('tr');
+
+    const issueCell = document.createElement('td');
+    issueCell.textContent = issueNumber;
+    row.appendChild(issueCell);
+
+    const numberCell = document.createElement('td');
+    numberCell.textContent = number;
+    row.appendChild(numberCell);
+
+    const sizeCell = document.createElement('td');
+    sizeCell.textContent = size;
+    row.appendChild(sizeCell);
+
+    const colourCell = document.createElement('td');
+    colourCell.textContent = colour.toUpperCase();
+    row.appendChild(colourCell);
+
+   
+    historyTable.appendChild(row);
+  });
+
+  
+  if (resultList.length >= 5) {
+    const latestFiveResults = resultList.slice(0, 5);
+    updateBalls(latestFiveResults);
+  }
+}
+
+function updateBalls(results) {
+  const balls = document.querySelectorAll('.ball');
+  
+  results.forEach((result, index) => {
+    if (balls[index]) {
+      const colour = result.colour.toLowerCase();
+      balls[index].textContent = result.number;
+      balls[index].className = 'ball';  
+      balls[index].classList.add(colour); 
+    }
+  });
+}
+
+
+fetchCurrentGameIssue();
+
+
+fetchPreviousResults();
+setInterval(fetchPreviousResults, 60000);
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tableContainer = document.createElement('div');
+  const table = document.createElement('table');
+  const tableHeader = document.createElement('thead');
+  const headerRow = document.createElement('tr');
+
+
+  
+  headers.forEach(headerText => {
+    const header = document.createElement('th');
+    header.textContent = headerText;
+    headerRow.appendChild(header);
+  });
+
+  tableHeader.appendChild(headerRow);
+  table.appendChild(tableHeader);
+  
+  const tableBody = document.createElement('tbody');
+  tableBody.id = 'history-list'; 
+  table.appendChild(tableBody);
+  
+  tableContainer.appendChild(table);
+  document.body.appendChild(tableContainer); 
+});
+
+</script>
+
+
+
+
+</body></html>
